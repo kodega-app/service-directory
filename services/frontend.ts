@@ -1,4 +1,8 @@
-import { ComponentResource, CustomResourceOptions } from "@pulumi/pulumi";
+import {
+  ComponentResource,
+  CustomResourceOptions,
+  Output,
+} from "@pulumi/pulumi";
 import FMBucket from "../resources/bucket";
 
 type FMFrontendArgs = {
@@ -7,14 +11,17 @@ type FMFrontendArgs = {
 };
 
 export class FMFrontend extends ComponentResource {
+  public readonly websiteEndpoint: Output<string> | undefined;
+
   constructor(args: FMFrontendArgs, opts?: CustomResourceOptions) {
     const resourceName = `${args.Product}-${args.Name}`;
     super("pkg:index:FMFrontend", resourceName, {}, opts);
 
-    new FMBucket(
+    const public_web = new FMBucket(
       {
         Name: args.Name,
         Product: args.Product,
+        Public: true,
       },
       {
         parent: this,
@@ -30,5 +37,10 @@ export class FMFrontend extends ComponentResource {
         parent: this,
       },
     );
+
+    this.websiteEndpoint = public_web.websiteEndpoint;
+    this.registerOutputs({
+      websiteEndpoint: this.websiteEndpoint,
+    });
   }
 }

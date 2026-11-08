@@ -1,10 +1,13 @@
 import { FMFrontend } from "./services/frontend";
 
 function main() {
-  new FMFrontend({
+  const website = new FMFrontend({
     Name: "frontend",
     Product: "development-course",
   });
+
+  return website;
 }
 
-main();
+const web = main();
+export const websiteEndpoint = web.websiteEndpoint;
