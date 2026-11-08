@@ -1,13 +1,15 @@
 import { FMFrontend } from "./services/frontend";
+import { FMBackend } from "./services/backend";
 
-function main() {
-  const website = new FMFrontend({
-    Name: "frontend",
-    Product: "development-course",
-  });
+const website = new FMFrontend({
+  Name: "frontend",
+  Product: "development-course",
+});
 
-  return website;
-}
+const backend = new FMBackend({
+  Name: "backend",
+  Product: "development-course",
+});
 
-const web = main();
-export const websiteEndpoint = web.websiteEndpoint;
+export const websiteEndpoint = website.websiteEndpoint;
+export const ecrRepository = backend.ecrRepository;
