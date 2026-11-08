@@ -1,9 +1,10 @@
-import FMBucket from "./resources/bucket";
+import { FMFrontend } from "./services/frontend";
 
-const bucket = new FMBucket({
-  Name: "terraform",
-  Product: "devops-course-by-kode",
-});
+function main() {
+  new FMFrontend({
+    Name: "frontend",
+    Product: "development-course",
+  });
+}
 
-export const bucketName = bucket.bucketName;
-export const bucketArn = bucket.bucketArn;
+main();
