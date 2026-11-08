@@ -20,15 +20,21 @@ class FMBucket extends ComponentResource {
     const resourceName = `${args.Product}-${args.Name}`;
     const stack = getStack();
 
-    const suffix = new random.RandomId("bucket-suffix", {
-      byteLength: 4,
-    });
+    super("pkg:index:FMBucket", resourceName, {}, opts);
+
+    const suffix = new random.RandomId(
+      `${args.Product}-${args.Name}-bucket-suffix`,
+      {
+        byteLength: 4,
+      },
+      {
+        parent: this,
+      },
+    );
 
     const bucketName = suffix.hex.apply(
       (value: any) => `${resourceName}-${stack}-${value}`,
     );
-
-    super("pkg:index:FMBucket", resourceName, {}, opts);
 
     const bucket = new aws.s3.Bucket(
       args.Name,

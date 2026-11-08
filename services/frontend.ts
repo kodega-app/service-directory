@@ -11,9 +11,19 @@ export class FMFrontend extends ComponentResource {
     const resourceName = `${args.Product}-${args.Name}`;
     super("pkg:index:FMFrontend", resourceName, {}, opts);
 
-    const bucket = new FMBucket(
+    new FMBucket(
       {
         Name: args.Name,
+        Product: args.Product,
+      },
+      {
+        parent: this,
+      },
+    );
+
+    new FMBucket(
+      {
+        Name: `${args.Name}-replica`,
         Product: args.Product,
       },
       {
